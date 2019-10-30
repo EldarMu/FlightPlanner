@@ -40,35 +40,26 @@ public class Planner extends JComponent
   public static void main(String[] args){
     JFrame window = new JFrame("Flight Planner");
     Planner pln = new Planner();
-    pln.fm = new FlightMap(n);
+    pln.txt = new JTextPane();
+    pln.txt.setEditable(false);
+    pln.txt.setSize(pln.txt.getPreferredSize());
+    pln.restart = new Button("Restart");
+    pln.solve = new Button("Solve");
     Container pane = window.getContentPane();
     pane.setLayout(new GridBagLayout());
     GridBagConstraints c = new GridBagConstraints();
 
-    pln.restart = new Button("Restart");
+    pln.generatePuzzle();
+
     pln.restart.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        boolean foundGoodPuzzle = false;
-        while(!foundGoodPuzzle){
-          pln.fm = new FlightMap(n);
-          foundGoodPuzzle = pln.fm.generatePuzzle();
-        }
-        pln.start = pln.fm.start;
-        pln.startIx = pln.fm.startIx;
-        pln.end = pln.fm.end;
-        pln.endIx = pln.fm.endIx;
-        pln.validSolution = new ArrayList<>();
-        pln.solverSolution = new ArrayList<>();
-
-        pln.txt.setText("Найдите кратчайший путь от " + pln.start.name + " до " + pln.end.name);
-
+        pln.generatePuzzle();
         pln.validate();
         pln.repaint();
       }
     });
 
-    pln.solve = new Button("Solve");
     pln.solve.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -114,9 +105,6 @@ public class Planner extends JComponent
     c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
     c.gridy = 1;
-    pln.txt = new JTextPane();
-    pln.txt.setEditable(false);
-    pln.txt.setSize(pln.txt.getPreferredSize());
     pane.add(pln.txt, c);
 
     c.gridx = 0;
@@ -131,12 +119,6 @@ public class Planner extends JComponent
     c.weightx = 0.5;
     pane.add(pln.solve, c);
 
-    pln.start = new City(-1,-1);
-    pln.startIx = -1;
-    pln.end = new City(-1,-1);
-    pln.endIx = -1;
-    pln.validSolution = new ArrayList<>();
-    pln.solverSolution = new ArrayList<>();
 
     window.pack();
     window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -144,8 +126,21 @@ public class Planner extends JComponent
     window.setVisible(true);
   }
 
-  private void makeNewMap(){
-    fm = new FlightMap(n);
+  private void generatePuzzle(){
+    Planner pln = this;
+    boolean foundGoodPuzzle = false;
+    while(!foundGoodPuzzle){
+      pln.fm = new FlightMap(n);
+      foundGoodPuzzle = pln.fm.generatePuzzle();
+    }
+    pln.start = pln.fm.start;
+    pln.startIx = pln.fm.startIx;
+    pln.end = pln.fm.end;
+    pln.endIx = pln.fm.endIx;
+    pln.validSolution = new ArrayList<>();
+    pln.solverSolution = new ArrayList<>();
+
+    pln.txt.setText("Найдите кратчайший путь от " + pln.start.name + " до " + pln.end.name);
   }
 
   public Dimension getPreferredSize()
