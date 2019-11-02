@@ -22,7 +22,7 @@ import java.awt.*;
 // с логикой вызванной при нажатии кнопок.
 public class Planner extends JComponent
 {
-  private static int squareSize = 9;
+  private int squareSize;
   private static int n = 100;
   private Button restart;
   private Button solve;
@@ -40,6 +40,7 @@ public class Planner extends JComponent
   public static void main(String[] args){
     JFrame window = new JFrame("Flight Planner");
     Planner pln = new Planner();
+    pln.setSquareSize();
     pln.txt = new JTextPane();
     pln.txt.setEditable(false);
     pln.txt.setSize(pln.txt.getPreferredSize());
@@ -125,6 +126,16 @@ public class Planner extends JComponent
     window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setLocationRelativeTo(null);
     window.setVisible(true);
+  }
+
+  private void setSquareSize(){
+    Planner pln = this;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    if(screenSize.getHeight() <= 1080.0){
+      pln.squareSize = 6;
+    } else {
+      pln.squareSize = 9;
+    }
   }
 
   private void generatePuzzle(){
