@@ -33,7 +33,7 @@ public class SolverEEM implements Solver {
   private void findPaths(Set<City> visited, List<City> curPath, City curCity, List<ArrayList<City>> paths, City end){
     curPath.add(curCity);
     visited.add(curCity);
-    if(curCity == end) {
+    if(curCity.equals(end)) {
       ArrayList<City> t = new ArrayList<>(curPath.size());
       for(City c : curPath){
         t.add(c);

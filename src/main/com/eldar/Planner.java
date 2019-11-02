@@ -95,7 +95,7 @@ public class Planner extends JComponent
       }
     });
 
-
+    pln.setMinimumSize(pln.getPreferredSize());
     c.fill = GridBagConstraints.BOTH;
     c.gridx = 0;
     c.gridy = 0;
@@ -121,6 +121,7 @@ public class Planner extends JComponent
 
 
     window.pack();
+    window.setMinimumSize(window.getSize());
     window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     window.setLocationRelativeTo(null);
     window.setVisible(true);
