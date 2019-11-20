@@ -2,6 +2,8 @@ package com.eldar;
 
 import com.eldar.solvers.Solver;
 import com.eldar.solvers.SolverEEM;
+import com.eldar.solvers.SolverIVL;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -65,7 +67,7 @@ public class Planner extends JComponent
       @Override
       public void actionPerformed(ActionEvent e) {
         if(pln.startIx == -1){return;} // чтобы не решал не существующие задачи
-        Solver solver = new SolverEEM(); // !!когда имплементируете свой Solver, замените это
+        Solver solver = new SolverIVL(); // !!когда имплементируете свой Solver, замените это
         ArrayList<City> solution = solver.findShortestPath(pln.startIx, pln.endIx, pln.fm.cities, pln.fm.connections);
         List<ArrayList<City>> validSolutions = pln.fm.getSolutions();
 
